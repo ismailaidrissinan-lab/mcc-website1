@@ -67,7 +67,7 @@
                                 :class="scrolled ? ( '{{ request()->routeIs('services') }}' ? 'text-mcc-blue-600' : 'text-mcc-slate-600 hover:text-mcc-blue-600' ) : 'text-white/90 hover:text-white'"
                                 class="text-sm font-semibold transition-colors duration-300">{{ __('Expertise') }}</a>
 
-                            <a href="{{ route('projects.index') }}" 
+                            <a href="{{ route('projects.index') }}"
                                 :class="scrolled ? ( '{{ request()->routeIs('projects.*') }}' ? 'text-mcc-blue-600' : 'text-mcc-slate-600 hover:text-mcc-blue-600' ) : 'text-white/90 hover:text-white'"
                                 class="text-sm font-semibold transition-colors duration-300">{{ __('Projects') }}</a>
 
