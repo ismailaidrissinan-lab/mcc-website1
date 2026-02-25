@@ -13,14 +13,24 @@
                     {{ __('Upload a CSV file to create multiple projects at once') }}
                 </p>
             </div>
-            <a href="{{ route('admin.projects.index') }}"
-                class="px-8 py-3.5 bg-mcc-slate-100 text-mcc-slate-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-mcc-slate-200 transition-all flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18">
-                    </path>
-                </svg>
-                {{ __('Back to List') }}
-            </a>
+            <div class="flex items-center space-x-3">
+                <a href="{{ asset('storage/project_batch_upload_template.csv') }}"
+                    download
+                    class="px-6 py-3.5 bg-mcc-blue-50 text-mcc-blue-700 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-mcc-blue-100 transition-all flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    {{ __('Download Template') }}
+                </a>
+                <a href="{{ route('admin.projects.index') }}"
+                    class="px-8 py-3.5 bg-mcc-slate-100 text-mcc-slate-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-mcc-slate-200 transition-all flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                        </path>
+                    </svg>
+                    {{ __('Back to List') }}
+                </a>
+            </div>
         </div>
 
         @if(session('success'))
