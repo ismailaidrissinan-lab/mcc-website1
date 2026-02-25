@@ -68,8 +68,21 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 // Fallback route for Laravel Cloud to serve public storage files bypassing Nginx storage blocks
 Route::get('/system-assets/{path}', function ($path) {
-    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-        return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
+    // Return early if not found to avoid exception
+    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+        abort(404, "File not found: " . $path);
     }
-    abort(404);
+    return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
 })->where('path', '.*');
+
+Route::get('/debug-storage', function() {
+    return response()->json([
+        'default_disk' => config('filesystems.default'),
+        'public_path_defined' => public_path('storage'),
+        'public_disk_root' => config('filesystems.disks.public.root'),
+        'sector_files_public' => \Illuminate\Support\Facades\Storage::disk('public')->files('sectors'),
+        'sector_files_default' => \Illuminate\Support\Facades\Storage::files('sectors'),
+        'project_files_public' => \Illuminate\Support\Facades\Storage::disk('public')->files('projects'),
+        'db_sectors' => \App\Models\Sector::select('id', 'name', 'image_path')->get()
+    ]);
+});
