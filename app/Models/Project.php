@@ -58,7 +58,7 @@ class Project extends Model
             if ($this->sector) {
                 return $this->sector->image_url;
             }
-            return asset('images/mcc-logo.png');
+            return '/images/mcc-logo.png';
         }
 
         if (filter_var($path, FILTER_VALIDATE_URL)) {
