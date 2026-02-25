@@ -43,7 +43,7 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image_path')) {
-            $validated['image_path'] = $request->file('image_path')->store('projects');
+            $validated['image_path'] = $request->file('image_path')->store('projects', 'public');
         }
 
         $validated['slug'] = Str::slug($validated['title']);
@@ -53,7 +53,7 @@ class ProjectController extends Controller
         // Handle multiple gallery images
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $image) {
-                $path = $image->store('projects/gallery');
+                $path = $image->store('projects/gallery', 'public');
                 $project->images()->create([
                     'image_path' => $path,
                 ]);
@@ -88,7 +88,7 @@ class ProjectController extends Controller
         ]);
 
         if ($request->hasFile('image_path')) {
-            $validated['image_path'] = $request->file('image_path')->store('projects');
+            $validated['image_path'] = $request->file('image_path')->store('projects', 'public');
         } else {
             unset($validated['image_path']);
         }
@@ -100,7 +100,7 @@ class ProjectController extends Controller
         // Handle multiple gallery images
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $image) {
-                $path = $image->store('projects/gallery');
+                $path = $image->store('projects/gallery', 'public');
                 $project->images()->create([
                     'image_path' => $path,
                 ]);

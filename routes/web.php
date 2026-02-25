@@ -68,11 +68,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
 // Fallback route for Laravel Cloud to serve public storage files bypassing Nginx storage blocks
 Route::get('/system-assets/{path}', function ($path) {
-    // Return early if not found to avoid exception
-    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-        abort(404, "File not found: " . $path);
+    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
+        return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
     }
-    return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
+
+    // Fallback: check local disk in case files were stored there by default
+    if (\Illuminate\Support\Facades\Storage::disk('local')->exists($path)) {
+        return \Illuminate\Support\Facades\Storage::disk('local')->response($path);
+    }
+
+    abort(404, "File not found: " . $path);
 })->where('path', '.*');
 
 Route::get('/debug-storage', function() {
