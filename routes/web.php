@@ -66,8 +66,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
 });
 
-// Fallback route for Laravel Cloud to serve public storage files without a symlink
-Route::get('/storage/{path}', function ($path) {
+// Fallback route for Laravel Cloud to serve public storage files bypassing Nginx storage blocks
+Route::get('/system-assets/{path}', function ($path) {
     if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
         return \Illuminate\Support\Facades\Storage::disk('public')->response($path);
     }
