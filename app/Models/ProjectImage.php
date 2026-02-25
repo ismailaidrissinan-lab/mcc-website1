@@ -16,7 +16,7 @@ class ProjectImage extends Model
     public function getImageUrlAttribute()
     {
         if (!$this->image_path) {
-            return asset('images/mcc-logo.png'); // Fallback instead of dead unsplash link
+            return '/images/mcc-logo.png'; // Fallback instead of dead unsplash link
         }
 
         if (filter_var($this->image_path, FILTER_VALIDATE_URL)) {
