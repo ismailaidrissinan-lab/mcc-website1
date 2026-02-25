@@ -16,7 +16,7 @@ class ProjectImage extends Model
     public function getImageUrlAttribute()
     {
         if (!$this->image_path) {
-            return 'https://images.unsplash.com/photo-1541888946425-d81bb19480c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80';
+            return asset('images/mcc-logo.png'); // Fallback instead of dead unsplash link
         }
 
         if (filter_var($this->image_path, FILTER_VALIDATE_URL)) {
