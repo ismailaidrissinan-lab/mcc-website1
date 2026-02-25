@@ -91,3 +91,67 @@ Route::get('/debug-storage', function() {
         'db_sectors' => \App\Models\Sector::select('id', 'name', 'image_path')->get()
     ]);
 });
+
+// TEMPORARY ROUTE: Seed Sectors on Production
+Route::get('/seed-sectors-production', function () {
+    $sectors = [
+        ['name' => 'Road & Bridges', 'slug' => 'road-bridges'],
+        ['name' => 'Oil & Gas', 'slug' => 'oil-gas'],
+        ['name' => 'Power & Renewable Energy', 'slug' => 'power-renewable-energy'],
+        ['name' => 'ICT', 'slug' => 'ict'],
+        ['name' => 'Healthcare', 'slug' => 'healthcare'],
+        ['name' => 'Marine', 'slug' => 'marine'],
+        ['name' => 'Water', 'slug' => 'water'],
+        ['name' => 'Railway & Tunnels', 'slug' => 'railway-tunnels'],
+        ['name' => 'Agriculture', 'slug' => 'agriculture'],
+        ['name' => 'Building & Construction', 'slug' => 'building-construction'],
+        ['name' => 'Mining', 'slug' => 'mining'],
+    ];
+
+    $created = [];
+    $imagesCopied = 0;
+
+    // Ensure the sectors directory exists in the public disk
+    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists('sectors')) {
+        \Illuminate\Support\Facades\Storage::disk('public')->makeDirectory('sectors');
+    }
+
+    // Default image path to copy
+    $defaultImagePath = public_path('images/mcc-logo.png');
+    $hasDefaultImage = file_exists($defaultImagePath);
+
+    foreach ($sectors as $sectorData) {
+        $sector = \App\Models\Sector::firstOrCreate(
+            ['slug' => $sectorData['slug']],
+            ['name' => $sectorData['name'], 'description' => 'A flagship ' . $sectorData['name'] . ' sector.']
+        );
+        
+        $created[] = $sector->name;
+
+        // Copy default image if the sector doesn't have one and the default image exists
+        if (!$sector->image_path && $hasDefaultImage) {
+            $filename = 'sectors/' . $sector->slug . '-default.png';
+            
+            // Try to copy the file to public storage
+            try {
+                \Illuminate\Support\Facades\Storage::disk('public')->put(
+                    $filename, 
+                    file_get_contents($defaultImagePath)
+                );
+                
+                $sector->update(['image_path' => $filename]);
+                $imagesCopied++;
+            } catch (\Exception $e) {
+                // Log or ignore image copy failure
+                \Illuminate\Support\Facades\Log::error("Failed to copy default image for sector {$sector->name}: {$e->getMessage()}");
+            }
+        }
+    }
+
+    return response()->json([
+        'message' => 'Sectors seeded successfully.',
+        'sectors_processed' => count($created),
+        'images_copied' => $imagesCopied,
+        'names' => $created
+    ]);
+});
