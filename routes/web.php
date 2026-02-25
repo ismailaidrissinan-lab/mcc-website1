@@ -8,7 +8,7 @@ use App\Http\Controllers\Public\SectorController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/chairman-message', [PageController::class, 'chairman'])->name('chairman');
+Route::get('/gmd-message', [PageController::class, 'gmd'])->name('gmd');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/awards', [PageController::class, 'awards'])->name('awards');
 Route::get('/talent-development', [PageController::class, 'training'])->name('training');
@@ -47,6 +47,13 @@ use App\Http\Controllers\Admin\SectorController as AdminSectorController;
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Project Batch & Image management
+    Route::get('projects/export', [AdminProjectController::class, 'export'])->name('projects.export');
+    Route::get('projects/import', [AdminProjectController::class, 'import'])->name('projects.import');
+    Route::post('projects/import', [AdminProjectController::class, 'processImport'])->name('projects.import.process');
+    Route::delete('projects/images/{image}', [AdminProjectController::class, 'destroyImage'])->name('projects.images.destroy');
+
     Route::resource('projects', AdminProjectController::class);
     Route::resource('sectors', AdminSectorController::class);
     Route::resource('awards', \App\Http\Controllers\Admin\AwardController::class);

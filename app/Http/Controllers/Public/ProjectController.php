@@ -12,11 +12,17 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Project::with('sector');
+        $query = Project::with(['sector', 'state', 'images']);
 
         if ($request->has('sector')) {
-            $query->whereHas('sector', function($q) use ($request) {
+            $query->whereHas('sector', function ($q) use ($request) {
                 $q->where('slug', $request->sector);
+            });
+        }
+
+        if ($request->has('state')) {
+            $query->whereHas('state', function ($q) use ($request) {
+                $q->where('slug', $request->state);
             });
         }
 
@@ -24,10 +30,48 @@ class ProjectController extends Controller
             $query->where('status', $request->status);
         }
 
-        $projects = $query->latest()->paginate(12);
-        $sectors = Sector::all();
+        $projects = $query->latest()->get();
 
-        return view('public.projects.index', compact('projects', 'sectors'));
+        // Calculate Statistics from ALL projects (ignoring status filter)
+        // so that clicking a status card doesn't change the counts of others
+        $statsQuery = Project::with(['sector', 'state']);
+
+        if ($request->has('sector')) {
+            $statsQuery->whereHas('sector', function ($q) use ($request) {
+                $q->where('slug', $request->sector);
+            });
+        }
+
+        if ($request->has('state')) {
+            $statsQuery->whereHas('state', function ($q) use ($request) {
+                $q->where('slug', $request->state);
+            });
+        }
+
+        $allForStats = $statsQuery->get();
+
+        $stats = [
+            'total' => $allForStats->count(),
+            'operational' => $allForStats->where('status', 'operational')->count(),
+            'completed' => $allForStats->where('status', 'completed')->count(),
+            'ongoing' => $allForStats->where('status', 'ongoing')->count(),
+            'suspended' => $allForStats->where('status', 'suspended')->count(),
+        ];
+
+        $sectors = Sector::all();
+        $states = \App\Models\State::all();
+        $statesWithProjects = \App\Models\State::whereHas('projects')->pluck('slug')->toArray();
+
+        if ($request->ajax()) {
+            $selectedStatus = $request->status;
+            return response()->json([
+                'list' => view('public.projects._list', compact('projects'))->render(),
+                'stats' => view('public.projects._stats', compact('stats', 'selectedStatus'))->render(),
+            ]);
+        }
+
+        $selectedStatus = $request->status;
+        return view('public.projects.index', compact('projects', 'sectors', 'states', 'statesWithProjects', 'stats', 'selectedStatus'));
     }
 
     public function show(Project $project)

@@ -11,10 +11,10 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate(
-            ['email' => 'admin@mccltd.com'],
+            ['email' => 'sinanismailaidris@gmail.com'],
             [
                 'name' => 'MCC Administrator',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('Sinan3367#'),
             ]
         );
     }

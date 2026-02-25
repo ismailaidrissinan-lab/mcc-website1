@@ -23,9 +23,9 @@ class PageController extends Controller
         return view('public.about');
     }
 
-    public function chairman()
+    public function gmd()
     {
-        return view('public.chairman');
+        return view('public.gmd');
     }
 
     public function contact()

@@ -6,7 +6,7 @@
 <!-- Awards Hero -->
 <div class="relative pt-32 pb-20 bg-mcc-slate-900 overflow-hidden">
     <div class="absolute inset-0 opacity-30">
-        <img src="https://images.unsplash.com/photo-1579546678183-a84849910e9e?auto=format&fit=crop&w=2000&q=80" class="w-full h-full object-cover">
+        <img src="{{ asset('images/mcc-logo.png') }}" class="w-full h-full object-cover">
     </div>
     <div class="container-wide relative z-10 text-center">
         <div class="inline-flex items-center space-x-2 px-3 py-1 bg-mcc-gold/20 border border-mcc-gold/30 rounded-full mb-6">

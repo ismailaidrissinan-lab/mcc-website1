@@ -5,8 +5,10 @@
 @section('content')
 <!-- Services Hero -->
 <div class="relative pt-32 pb-24 bg-mcc-slate-900 overflow-hidden">
-    <div class="absolute inset-0 opacity-20">
-        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" class="w-full h-full object-cover">
+    <div class="absolute inset-0 opacity-30">
+        <img src="{{ asset('images/mcc-logo.png') }}" 
+             alt="Modern Engineering in China"
+             class="w-full h-full object-cover">
     </div>
     <div class="container-wide relative z-10 text-center">
         <div class="inline-flex items-center space-x-2 px-3 py-1 bg-mcc-gold/20 border border-mcc-gold/30 rounded-full mb-6">
@@ -102,7 +104,7 @@
             
             <div class="relative" reveal>
                 <div class="aspect-square bg-mcc-slate-900 rounded-[3rem] overflow-hidden shadow-2xl relative">
-                    <img src="https://images.unsplash.com/photo-1503387762-592dea58ef21?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="w-full h-full object-cover opacity-60">
+                    <img src="{{ asset('images/mcc-logo.png') }}" class="w-full h-full object-cover opacity-60">
                     <div class="absolute inset-0 flex items-center justify-center p-12 text-center">
                         <div class="p-10 border border-white/20 backdrop-blur-md bg-white/5 rounded-3xl">
                             <h3 class="text-white text-2xl font-bold mb-4">{{ __('Partner with MCC') }}</h3>

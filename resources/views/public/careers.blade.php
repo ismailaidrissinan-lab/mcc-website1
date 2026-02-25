@@ -6,7 +6,7 @@
 <!-- Careers Hero -->
 <div class="relative pt-32 pb-48 lg:pb-64 bg-mcc-slate-900 overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80" 
+        <img src="{{ asset('images/mcc-logo.png') }}" 
              class="w-full h-full object-cover opacity-30 transform scale-105">
         <div class="absolute inset-0 bg-gradient-to-b from-mcc-slate-900/50 via-mcc-slate-900 to-white"></div>
     </div>

@@ -100,6 +100,82 @@
         transition-delay: 500ms;
     }
 
+    /* Reveal Variants */
+    [reveal-left] {
+        opacity: 0;
+        transform: translateX(-40px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [reveal-left].active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    [reveal-right] {
+        opacity: 0;
+        transform: translateX(40px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [reveal-right].active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    [reveal-scale] {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [reveal-scale].active {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Premium Card Hover Effects */
+    .card-hover {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card-hover:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-hover:hover img {
+        transform: scale(1.05);
+    }
+
+    .card-hover img {
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Button Loading State */
+    .btn-loading {
+        position: relative;
+        pointer-events: none;
+    }
+
+    .btn-loading::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: btn-spin 0.6s linear infinite;
+        right: 1rem;
+    }
+
+    @keyframes btn-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
         width: 8px;

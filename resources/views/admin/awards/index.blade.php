@@ -42,7 +42,7 @@
                     </td>
                     <td class="px-6 py-4 text-right space-x-2">
                         <a href="{{ route('admin.awards.edit', $award) }}" class="text-mcc-blue-600 hover:text-mcc-blue-800 text-sm font-bold">Edit</a>
-                        <form action="{{ route('admin.awards.destroy', $award) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this award?')">
+                        <form action="{{ route('admin.awards.destroy', $award) }}" method="POST" class="inline-block" class="delete-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-bold">Delete</button>
