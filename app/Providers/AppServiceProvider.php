@@ -19,10 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (config('app.env') === 'production') {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
-        }
-
         if (!app()->runningInConsole() && \Illuminate\Support\Facades\Schema::hasTable('sectors')) {
             view()->share('global_sectors', \App\Models\Sector::all());
         } else {
