@@ -26,7 +26,7 @@ class SectorController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:sectors',
             'description' => 'nullable|string',
-            'image_path' => 'nullable|image|max:2048',
+            'image_path' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image_path')) {
@@ -50,7 +50,7 @@ class SectorController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:sectors,name,'.$sector->id,
             'description' => 'nullable|string',
-            'image_path' => 'nullable|image|max:2048',
+            'image_path' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image_path')) {

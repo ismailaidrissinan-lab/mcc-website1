@@ -27,7 +27,7 @@ class TrainingController extends Controller
             'title' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image')) {
@@ -50,7 +50,7 @@ class TrainingController extends Controller
             'title' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image')) {

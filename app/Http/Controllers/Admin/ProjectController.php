@@ -38,8 +38,8 @@ class ProjectController extends Controller
             'status' => 'required|in:ongoing,completed,operational,suspended',
             'award_date' => 'nullable|date',
             'completion_date' => 'nullable|date',
-            'image_path' => 'nullable|image|max:4096',
-            'gallery_images.*' => 'nullable|image|max:4096',
+            'image_path' => 'nullable|image|max:1024',
+            'gallery_images.*' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image_path')) {
@@ -83,8 +83,8 @@ class ProjectController extends Controller
             'status' => 'required|in:ongoing,completed,operational,suspended',
             'award_date' => 'nullable|date',
             'completion_date' => 'nullable|date',
-            'image_path' => 'nullable|image|max:4096',
-            'gallery_images.*' => 'nullable|image|max:4096',
+            'image_path' => 'nullable|image|max:1024',
+            'gallery_images.*' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image_path')) {

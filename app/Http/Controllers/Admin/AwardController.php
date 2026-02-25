@@ -28,7 +28,7 @@ class AwardController extends Controller
             'description' => 'nullable|string',
             'year' => 'nullable|integer',
             'type' => 'required|in:award,csr,donation',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image')) {
@@ -52,7 +52,7 @@ class AwardController extends Controller
             'description' => 'nullable|string',
             'year' => 'nullable|integer',
             'type' => 'required|in:award,csr,donation',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
         ]);
 
         if ($request->hasFile('image')) {

@@ -25,7 +25,7 @@ class CsrProjectController extends Controller
             'summary' => 'required|string',
             'content' => 'required|string',
             'location' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
             'published_at' => 'required|date',
         ]);
 
@@ -54,7 +54,7 @@ class CsrProjectController extends Controller
             'summary' => 'required|string',
             'content' => 'required|string',
             'location' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
             'published_at' => 'required|date',
         ]);
 

@@ -27,7 +27,7 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'summary' => 'required|string',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
             'published_at' => 'nullable|date',
         ]);
 
@@ -55,7 +55,7 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'summary' => 'required|string',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:1024',
             'published_at' => 'nullable|date',
         ]);
 
