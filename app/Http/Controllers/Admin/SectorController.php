@@ -55,6 +55,8 @@ class SectorController extends Controller
 
         if ($request->hasFile('image_path')) {
             $validated['image_path'] = $request->file('image_path')->store('sectors', 'public');
+        } else {
+            unset($validated['image_path']);
         }
 
         $validated['slug'] = Str::slug($validated['name']);

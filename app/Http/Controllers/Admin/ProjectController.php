@@ -89,6 +89,8 @@ class ProjectController extends Controller
 
         if ($request->hasFile('image_path')) {
             $validated['image_path'] = $request->file('image_path')->store('projects', 'public');
+        } else {
+            unset($validated['image_path']);
         }
 
         $validated['slug'] = Str::slug($validated['title']);
