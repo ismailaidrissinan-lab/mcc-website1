@@ -14,7 +14,7 @@
                 </p>
             </div>
             <div class="flex items-center space-x-3">
-                <a href="{{ asset('storage/project_batch_upload_template.csv') }}"
+                <a href="{{ asset('project_batch_upload_template.csv') }}"
                     download
                     class="px-6 py-3.5 bg-mcc-blue-50 text-mcc-blue-700 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-mcc-blue-100 transition-all flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
