@@ -26,7 +26,7 @@ class SettingController extends Controller
                 if ($oldSetting && $oldSetting->value) {
                     Storage::disk('public')->delete($oldSetting->value);
                 }
-                $value = $request->file($key)->store('settings', 'public');
+                $value = $request->file($key)->store('settings');
             }
 
             Setting::updateOrCreate(

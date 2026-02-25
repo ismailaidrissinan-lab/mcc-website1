@@ -36,7 +36,7 @@ class ArticleController extends Controller
         $data['published_at'] = $request->published_at ?? now();
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('articles', 'public');
+            $data['image_path'] = $request->file('image')->store('articles');
         }
 
         Article::create($data);
@@ -66,7 +66,7 @@ class ArticleController extends Controller
             if ($article->image_path) {
                 Storage::disk('public')->delete($article->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('articles', 'public');
+            $data['image_path'] = $request->file('image')->store('articles');
         }
 
         $article->update($data);

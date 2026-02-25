@@ -28,7 +28,7 @@ class InvestorDocumentController extends Controller
         ]);
 
         if ($request->hasFile('document')) {
-            $data['file_path'] = $request->file('document')->store('investors', 'public');
+            $data['file_path'] = $request->file('document')->store('investors');
         }
 
         \App\Models\InvestorDocument::create($data);
@@ -54,7 +54,7 @@ class InvestorDocumentController extends Controller
 
         if ($request->hasFile('document')) {
             \Illuminate\Support\Facades\Storage::cloud()->delete($doc->file_path);
-            $data['file_path'] = $request->file('document')->store('investors', 'public');
+            $data['file_path'] = $request->file('document')->store('investors');
         }
 
         $doc->update($data);

@@ -31,7 +31,7 @@ class TrainingController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('training', 'public');
+            $validated['image_path'] = $request->file('image')->store('training');
         }
 
         TrainingProgram::create($validated);
@@ -57,7 +57,7 @@ class TrainingController extends Controller
             if ($training->image_path) {
                 Storage::disk('public')->delete($training->image_path);
             }
-            $validated['image_path'] = $request->file('image')->store('training', 'public');
+            $validated['image_path'] = $request->file('image')->store('training');
         }
 
         $training->update($validated);

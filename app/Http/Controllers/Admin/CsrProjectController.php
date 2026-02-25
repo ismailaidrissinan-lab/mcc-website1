@@ -32,7 +32,7 @@ class CsrProjectController extends Controller
         $data['slug'] = \Illuminate\Support\Str::slug($request->title);
         
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('csr', 'public');
+            $data['image_path'] = $request->file('image')->store('csr');
         }
 
         \App\Models\CsrProject::create($data);
@@ -64,7 +64,7 @@ class CsrProjectController extends Controller
             if ($project->image_path) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($project->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('csr', 'public');
+            $data['image_path'] = $request->file('image')->store('csr');
         }
 
         $project->update($data);

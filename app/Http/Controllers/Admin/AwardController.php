@@ -32,7 +32,7 @@ class AwardController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('awards', 'public');
+            $validated['image_path'] = $request->file('image')->store('awards');
         }
 
         Award::create($validated);
@@ -59,7 +59,7 @@ class AwardController extends Controller
             if ($award->image_path) {
                 Storage::disk('public')->delete($award->image_path);
             }
-            $validated['image_path'] = $request->file('image')->store('awards', 'public');
+            $validated['image_path'] = $request->file('image')->store('awards');
         }
 
         $award->update($validated);

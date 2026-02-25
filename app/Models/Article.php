@@ -31,6 +31,6 @@ class Article extends Model
             return $this->image_path;
         }
 
-        return asset('storage/' . ltrim($this->image_path, '/'));
+        return \Illuminate\Support\Facades\Storage::url($this->image_path);
     }
 }
