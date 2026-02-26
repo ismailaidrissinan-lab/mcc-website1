@@ -58,7 +58,7 @@
 
     #nigeria-map-container .state-label {
         font-family: 'Inter', sans-serif;
-        font-size: 20px;
+        font-size: 12px;
         font-weight: 800;
         fill: #1e293b;
         pointer-events: none;
@@ -78,7 +78,7 @@
 
     #nigeria-map-container .state-path:hover+.state-label,
     #nigeria-map-container .state-label:hover {
-        font-size: 24px;
+        font-size: 14px;
         fill: #000;
     }
 </style>
@@ -181,7 +181,7 @@
                 if (area < 1000) {
                     text.style.fontSize = '12px';
                 } else if (area < 2500) {
-                    text.style.fontSize = '16px';
+                    text.style.fontSize = '12px';
                 }
 
                 svg.appendChild(text);
