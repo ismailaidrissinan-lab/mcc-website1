@@ -58,8 +58,8 @@
 
     #nigeria-map-container .state-label {
         font-family: 'Inter', sans-serif;
-        font-size: 8px;
-        font-weight: 700;
+        font-size: 14px;
+        font-weight: 800;
         fill: #1e293b;
         pointer-events: none;
         letter-spacing: 0.05em;
@@ -78,7 +78,7 @@
 
     #nigeria-map-container .state-path:hover+.state-label,
     #nigeria-map-container .state-label:hover {
-        font-size: 10px;
+        font-size: 16px;
         fill: #000;
     }
 </style>
@@ -179,9 +179,9 @@
 
                 const area = bbox.width * bbox.height;
                 if (area < 1000) {
-                    text.style.fontSize = '5px';
+                    text.style.fontSize = '8px';
                 } else if (area < 2500) {
-                    text.style.fontSize = '7px';
+                    text.style.fontSize = '11px';
                 }
 
                 svg.appendChild(text);
