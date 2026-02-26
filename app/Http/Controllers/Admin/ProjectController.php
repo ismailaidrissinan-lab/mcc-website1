@@ -297,7 +297,36 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        if ($project->image_path) {
+            \Illuminate\Support\Facades\Storage::delete($project->image_path);
+        }
+        foreach ($project->images as $image) {
+            \Illuminate\Support\Facades\Storage::delete($image->image_path);
+        }
         $project->delete();
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:projects,id',
+        ]);
+
+        $projects = Project::whereIn('id', $request->ids)->get();
+        $count = $projects->count();
+
+        foreach ($projects as $project) {
+            if ($project->image_path) {
+                \Illuminate\Support\Facades\Storage::delete($project->image_path);
+            }
+            foreach ($project->images as $image) {
+                \Illuminate\Support\Facades\Storage::delete($image->image_path);
+            }
+            $project->delete();
+        }
+
+        return redirect()->route('admin.projects.index')->with('success', "{$count} project(s) deleted successfully.");
     }
 }

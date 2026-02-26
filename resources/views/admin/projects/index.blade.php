@@ -3,7 +3,7 @@
 @section('title', __('Project Management'))
 
 @section('content')
-    <div x-data="{ openDeleteModal: false, deleteAction: '' }">
+    <div x-data="{ openDeleteModal: false, deleteAction: '', selectedProjects: [], openBulkDeleteModal: false, selectAll: false }" x-init="$watch('selectAll', value => selectedProjects = value ? {{ $projects->pluck('id')->toJson() }} : [])">
         <div class="mb-10 flex items-center justify-between">
             <div>
                 <h2 class="text-2xl font-black text-mcc-slate-900 tracking-tight uppercase">{{ __('Projects') }}</h2>
@@ -12,6 +12,12 @@
                 </p>
             </div>
             <div class="flex items-center space-x-3">
+                <button x-show="selectedProjects.length > 0" @click="openBulkDeleteModal = true" class="px-6 py-3.5 bg-red-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl hover:bg-black transition-all flex items-center" x-cloak>
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    {{ __('Bulk Delete') }} <span class="ml-1 bg-white text-red-600 px-1.5 py-0.5 rounded-md text-[8px]" x-text="selectedProjects.length"></span>
+                </button>
                 <a href="{{ route('admin.projects.export') }}"
                     class="px-6 py-3.5 bg-mcc-slate-100 text-mcc-slate-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl hover:bg-mcc-slate-200 transition-all flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,6 +78,9 @@
                 <table class="w-full text-left">
                     <thead>
                         <tr class="bg-mcc-slate-50/50 border-b border-mcc-slate-50">
+                            <th class="px-6 py-6 text-center w-12">
+                                <input type="checkbox" x-model="selectAll" class="w-4 h-4 text-mcc-blue-600 bg-white border-mcc-slate-200 rounded focus:ring-mcc-blue-500 focus:ring-2 cursor-pointer transition-colors shadow-sm">
+                            </th>
                             <th class="px-10 py-6 text-[10px] font-black text-mcc-slate-400 uppercase tracking-widest">
                                 {{ __('Project Information') }}
                             </th>
@@ -92,7 +101,10 @@
                     </thead>
                     <tbody class="divide-y divide-mcc-slate-50">
                         @forelse($projects as $project)
-                                            <tr class="hover:bg-mcc-blue-50/30 transition-colors group">
+                                            <tr class="hover:bg-mcc-blue-50/30 transition-colors group" :class="{ 'bg-mcc-blue-50/50': selectedProjects.includes({{ $project->id }}) }">
+                                                <td class="px-6 py-6 text-center">
+                                                    <input type="checkbox" value="{{ $project->id }}" x-model="selectedProjects" class="w-4 h-4 text-mcc-blue-600 bg-white border-mcc-slate-200 rounded focus:ring-mcc-blue-500 focus:ring-2 cursor-pointer transition-colors shadow-sm">
+                                                </td>
                                                 <td class="px-10 py-6">
                                                     <div class="flex items-center">
                                                         <div class="w-12 h-12 bg-mcc-slate-100 rounded-xl overflow-hidden flex-shrink-0 mr-4">
@@ -173,7 +185,7 @@
                                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-10 py-20 text-center">
+                                <td colspan="6" class="px-10 py-20 text-center">
                                     <div class="flex flex-col items-center">
                                         <svg class="w-16 h-16 text-mcc-slate-100 mb-4" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
@@ -218,6 +230,35 @@
                         </button>
                     </form>
                     <button @click="openDeleteModal = false"
+                        class="w-full py-4 bg-mcc-slate-100 text-mcc-slate-600 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-mcc-slate-200 transition-all">
+                        {{ __('Cancel') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Delete Modal -->
+        <div x-show="openBulkDeleteModal"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-mcc-slate-900/50 backdrop-blur-sm" x-cloak>
+            <div class="bg-white rounded-[2.5rem] w-full max-w-sm p-10 shadow-2xl overflow-hidden relative">
+                <h3 class="text-xl font-black text-mcc-slate-900 uppercase tracking-tight mb-4">{{ __('Bulk Delete Projects?') }}
+                </h3>
+                <p class="text-mcc-slate-500 text-sm font-medium mb-8">
+                    {{ __('You are about to delete ') }} <span class="font-bold text-mcc-slate-900" x-text="selectedProjects.length"></span> {{ __(' projects and their images. This action is permanent and cannot be undone.') }}
+                </p>
+                <div class="flex flex-col space-y-3">
+                    <form action="{{ route('admin.projects.bulk-destroy') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <template x-for="id in selectedProjects">
+                            <input type="hidden" name="ids[]" :value="id">
+                        </template>
+                        <button type="submit"
+                            class="w-full py-4 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-black transition-all">
+                            {{ __('Confirm Bulk Deletion') }}
+                        </button>
+                    </form>
+                    <button @click="openBulkDeleteModal = false"
                         class="w-full py-4 bg-mcc-slate-100 text-mcc-slate-600 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-mcc-slate-200 transition-all">
                         {{ __('Cancel') }}
                     </button>

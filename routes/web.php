@@ -49,6 +49,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Project Batch & Image management
+    Route::delete('/projects/bulk-delete', [\App\Http\Controllers\Admin\ProjectController::class, 'bulkDestroy'])->name('projects.bulk-destroy');
     Route::get('projects/export', [AdminProjectController::class, 'export'])->name('projects.export');
     Route::get('projects/import', [AdminProjectController::class, 'import'])->name('projects.import');
     Route::post('projects/import', [AdminProjectController::class, 'processImport'])->name('projects.import.process');
