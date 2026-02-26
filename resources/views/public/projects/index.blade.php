@@ -118,16 +118,21 @@
                                 </div>
 
                                 <div
-                                    class="flex items-center bg-white rounded-full border border-mcc-slate-200 p-1 shadow-sm shrink-0">
+                                    class="flex items-center bg-white rounded-full border border-mcc-slate-200 p-1 shadow-sm shrink-0 w-32 sm:w-40 relative">
                                     <span
-                                        class="pl-3 pr-2 text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest">{{ __('Sector:') }}</span>
+                                        class="pl-3 pr-1 text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest">{{ __('Sector') }}</span>
                                     <select x-model="selectedSector" @change="fetchProjects()"
-                                        class="text-xs font-bold border-none bg-transparent py-1.5 pl-2 pr-8 text-mcc-slate-700 focus:ring-0 cursor-pointer hover:text-mcc-blue-600 transition-colors">
+                                        class="w-full text-xs font-bold border-none bg-transparent py-1.5 pl-1 pr-6 text-mcc-slate-700 focus:ring-0 cursor-pointer hover:text-mcc-blue-600 transition-colors truncate appearance-none">
                                         <option value="">{{ __('All Sectors') }}</option>
                                         @foreach($sectors as $sector)
                                             <option value="{{ $sector->slug }}">{{ $sector->name }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <svg class="h-4 w-4 text-mcc-slate-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
                                 </div>
 
                                 <button @click="showMap = !showMap"
@@ -159,7 +164,7 @@
 
                 <!-- Right Pane: Projects Sidebar (35%) -->
                 <div
-                    class="w-full lg:w-[35%] lg:h-full bg-white rounded-3xl shadow-sm border border-mcc-slate-100 flex flex-col overflow-hidden relative">
+                    class="w-full lg:w-[35%] lg:h-full min-h-[600px] lg:min-h-0 bg-white rounded-3xl shadow-sm border border-mcc-slate-100 flex flex-col overflow-hidden relative">
                     <!-- Header for List -->
                     <div class="p-6 border-b border-mcc-slate-100 bg-mcc-slate-50/50 flex flex-col gap-4 shrink-0">
                         <div class="flex items-center justify-between">

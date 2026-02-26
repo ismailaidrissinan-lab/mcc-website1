@@ -134,7 +134,11 @@
                     <a href="{{ route('home') }}"
                         class="block px-4 py-3 rounded-xl {{ request()->routeIs('home') ? 'bg-mcc-blue-50 text-mcc-blue-700' : 'text-mcc-slate-600' }} text-base font-bold">{{ __('Home') }}</a>
                     <a href="{{ route('about') }}"
-                        class="block px-4 py-3 text-mcc-slate-600 text-base font-bold">{{ __('About Us') }}</a>
+                        class="block px-4 py-3 text-mcc-slate-600 text-base font-bold">{{ __('Company Overview') }}</a>
+                    <a href="{{ route('gmd') }}"
+                        class="block px-4 py-3 text-mcc-slate-600 text-base font-bold">{{ __('GMD\'s Message') }}</a>
+                    <a href="{{ route('services') }}"
+                        class="block px-4 py-3 text-mcc-slate-600 text-base font-bold">{{ __('Expertise') }}</a>
                     <a href="{{ route('awards') }}"
                         class="block px-4 py-3 text-mcc-slate-600 text-base font-bold">{{ __('Awards & Recognition') }}</a>
                     <a href="{{ route('training') }}"

@@ -36,6 +36,7 @@ class ProjectController extends Controller
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%")
                   ->orWhereHas('sector', function ($sq) use ($search) {
                       $sq->where('name', 'like', "%{$search}%");
                   })
@@ -69,6 +70,7 @@ class ProjectController extends Controller
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('location', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%")
                   ->orWhereHas('sector', function ($sq) use ($search) {
                       $sq->where('name', 'like', "%{$search}%");
                   })
