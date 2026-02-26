@@ -48,12 +48,14 @@
                             document.body.style.overflow = 'auto';
                         },
                         loading: false,
+                        searchQuery: '{{ request('search', '') }}',
                         selectedState: '{{ request('state', '') }}',
                         selectedSector: '{{ request('sector', '') }}',
                         selectedStatus: '{{ request('status', '') }}',
                         fetchProjects() {
                             this.loading = true;
                             const url = new URL('{{ route('projects.index') }}');
+                            if (this.searchQuery) url.searchParams.set('search', this.searchQuery);
                             if (this.selectedState) url.searchParams.set('state', this.selectedState);
                             if (this.selectedSector) url.searchParams.set('sector', this.selectedSector);
                             if (this.selectedStatus) url.searchParams.set('status', this.selectedStatus);
@@ -102,7 +104,19 @@
                                 </p>
                             </div>
 
-                            <div class="flex items-center gap-3">
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto mt-4 sm:mt-0">
+                                <!-- Search Bar -->
+                                <div class="relative flex-1 sm:w-64">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-4 w-4 text-mcc-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                    <input type="text" x-model.debounce.500ms="searchQuery" @input="fetchProjects()"
+                                        placeholder="{{ __('Search projects...') }}"
+                                        class="block w-full pl-10 pr-3 py-2 border border-mcc-slate-200 rounded-full leading-5 bg-white placeholder-mcc-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-mcc-blue-500 focus:border-mcc-blue-500 text-sm transition-all shadow-sm">
+                                </div>
+
                                 <div
                                     class="flex items-center bg-white rounded-full border border-mcc-slate-200 p-1 shadow-sm shrink-0">
                                     <span
@@ -157,9 +171,9 @@
                             </h3>
 
                             <!-- Active Filters Display -->
-                            <template x-if="selectedState || selectedSector || selectedStatus">
+                            <template x-if="searchQuery || selectedState || selectedSector || selectedStatus">
                                 <button
-                                    @click="selectedState = ''; selectedSector = ''; selectedStatus = ''; fetchProjects(); $dispatch('reset-map')"
+                                    @click="searchQuery = ''; selectedState = ''; selectedSector = ''; selectedStatus = ''; fetchProjects(); $dispatch('reset-map')"
                                     class="flex items-center gap-1 px-2.5 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-colors border border-red-100 text-[9px] font-bold uppercase tracking-widest shadow-sm">
                                     <span>✕</span> Clear
                                 </button>
@@ -299,63 +313,69 @@
                         <!-- Premium Metadata Grid -->
                         <div class="flex flex-col gap-3 mb-10">
                             <!-- Location -->
-                            <div
-                                class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                            <template x-if="activeProject?.location">
                                 <div
-                                    class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
+                                    class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                            </path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('Location') }}</span>
+                                        <span class="block text-sm font-bold text-mcc-slate-800"
+                                            x-text="activeProject.location"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span
-                                        class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('Location') }}</span>
-                                    <span class="block text-sm font-bold text-mcc-slate-800"
-                                        x-text="activeProject?.location || 'N/A'"></span>
-                                </div>
-                            </div>
+                            </template>
 
                             <!-- State -->
-                            <div
-                                class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                            <template x-if="activeProject?.state">
                                 <div
-                                    class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                        </path>
-                                    </svg>
+                                    class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('State') }}</span>
+                                        <span class="block text-sm font-bold text-mcc-slate-800"
+                                            x-text="activeProject.state"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span
-                                        class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('State') }}</span>
-                                    <span class="block text-sm font-bold text-mcc-slate-800"
-                                        x-text="activeProject?.state || 'N/A'"></span>
-                                </div>
-                            </div>
+                            </template>
 
                             <!-- Award Date -->
-                            <div
-                                class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                            <template x-if="activeProject?.award_date">
                                 <div
-                                    class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
+                                    class="flex items-center p-4 bg-mcc-slate-50 rounded-2xl border border-mcc-slate-100 transition-colors hover:bg-mcc-slate-100/80">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-white shadow-sm border border-mcc-slate-100 flex items-center justify-center shrink-0 mr-4 text-mcc-blue-500">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('Award Date') }}</span>
+                                        <span class="block text-sm font-bold text-mcc-slate-800"
+                                            x-text="activeProject.award_date"></span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span
-                                        class="block text-[10px] font-bold text-mcc-slate-400 uppercase tracking-widest mb-0.5">{{ __('Award Date') }}</span>
-                                    <span class="block text-sm font-bold text-mcc-slate-800"
-                                        x-text="activeProject?.award_date"></span>
-                                </div>
-                            </div>
+                            </template>
                         </div>
 
                         <!-- Description -->

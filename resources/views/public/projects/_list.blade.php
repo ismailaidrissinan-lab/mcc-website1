@@ -7,7 +7,7 @@
                 'sector' => $project->sector ? $project->sector->name : null,
                 'state' => $project->state ? $project->state->name : null,
                 'status' => $project->status,
-                'award_date' => $project->award_date ? $project->award_date->format("M Y") : "N/A",
+                'award_date' => $project->award_date ? $project->award_date->format("M Y") : null,
                 'location' => $project->location,
                 'images' => $project->images->count() > 0 ? $project->images->map(fn($img) => $img->image_url)->toArray() : [$project->image_url],
             ];

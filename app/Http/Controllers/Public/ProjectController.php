@@ -30,6 +30,21 @@ class ProjectController extends Controller
             $query->where('status', $request->status);
         }
 
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('sector', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('state', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
         $projects = $query->latest()->get();
 
         // Calculate Statistics from ALL projects (ignoring status filter)
@@ -45,6 +60,21 @@ class ProjectController extends Controller
         if ($request->has('state')) {
             $statsQuery->whereHas('state', function ($q) use ($request) {
                 $q->where('slug', $request->state);
+            });
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $statsQuery->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('sector', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('state', function ($sq) use ($search) {
+                      $sq->where('name', 'like', "%{$search}%");
+                  });
             });
         }
 
