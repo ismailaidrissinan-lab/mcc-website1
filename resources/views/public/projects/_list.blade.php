@@ -5,6 +5,7 @@
                 'title' => $project->title,
                 'description' => $project->description,
                 'sector' => $project->sector ? $project->sector->name : null,
+                'state' => $project->state ? $project->state->name : null,
                 'status' => $project->status,
                 'award_date' => $project->award_date ? $project->award_date->format("M Y") : "N/A",
                 'location' => $project->location,
