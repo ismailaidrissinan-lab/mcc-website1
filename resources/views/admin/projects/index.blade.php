@@ -38,6 +38,35 @@
             </div>
         </div>
 
+        <div class="mb-6 bg-white p-6 rounded-[2rem] shadow-sm border border-mcc-slate-100">
+            <form action="{{ route('admin.projects.index') }}" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-1 w-full">
+                    <label for="search" class="block text-xs font-black text-mcc-slate-500 uppercase tracking-widest mb-2">{{ __('Search Projects') }}</label>
+                    <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="{{ __('Search by title or location...') }}" class="w-full px-4 py-3 bg-mcc-slate-50 border-transparent focus:border-mcc-blue-500 focus:bg-white focus:ring-0 rounded-xl text-sm font-medium text-mcc-slate-900 transition-colors">
+                </div>
+                <div class="w-full md:w-64">
+                    <label for="status" class="block text-xs font-black text-mcc-slate-500 uppercase tracking-widest mb-2">{{ __('Filter by Status') }}</label>
+                    <select name="status" id="status" class="w-full px-4 py-3 bg-mcc-slate-50 border-transparent focus:border-mcc-blue-500 focus:bg-white focus:ring-0 rounded-xl text-sm font-medium text-mcc-slate-900 transition-colors">
+                        <option value="">{{ __('All Statuses') }}</option>
+                        <option value="ongoing" {{ request('status') === 'ongoing' ? 'selected' : '' }}>{{ __('Ongoing') }}</option>
+                        <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('Completed') }}</option>
+                        <option value="operational" {{ request('status') === 'operational' ? 'selected' : '' }}>{{ __('Operational') }}</option>
+                        <option value="suspended" {{ request('status') === 'suspended' ? 'selected' : '' }}>{{ __('Suspended') }}</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <button type="submit" class="px-8 py-3.5 bg-mcc-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-black transition-all">
+                        {{ __('Filter') }}
+                    </button>
+                    @if(request()->filled('search') || request()->filled('status'))
+                        <a href="{{ route('admin.projects.index') }}" class="px-6 py-3.5 bg-red-50 text-red-600 text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-red-100 transition-all text-center">
+                            {{ __('Clear') }}
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <div class="bg-white rounded-[2.5rem] shadow-xl border border-mcc-slate-100 overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">

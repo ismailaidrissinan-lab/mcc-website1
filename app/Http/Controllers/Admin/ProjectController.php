@@ -13,9 +13,24 @@ use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::with(['sector', 'state'])->latest()->paginate(20);
+        $query = Project::with(['sector', 'state'])->latest();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        $projects = $query->paginate(20)->appends($request->query());
+
         return view('admin.projects.index', compact('projects'));
     }
 
