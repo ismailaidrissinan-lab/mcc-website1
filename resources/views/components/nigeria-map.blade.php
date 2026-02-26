@@ -215,10 +215,10 @@
                 let cx = bbox.x + bbox.width / 2;
                 let cy = bbox.y + bbox.height / 2;
 
-                const size = 12;
+                const size = 26;
                 image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '{{ asset('images/mcc-logo.png') }}');
                 image.setAttribute('x', cx - size / 2);
-                image.setAttribute('y', cy - size - 4); // 4px above the center (where label usually is)
+                image.setAttribute('y', cy - size - 2); // 2px above the center
                 image.setAttribute('width', size);
                 image.setAttribute('height', size);
                 image.setAttribute('class', 'state-marker');
