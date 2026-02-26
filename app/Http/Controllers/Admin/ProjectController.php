@@ -148,7 +148,7 @@ class ProjectController extends Controller
         // First row is header
         $header = array_map('trim', array_map('strtolower', array_shift($rows)));
 
-        $requiredColumns = ['title', 'sector', 'description', 'status'];
+        $requiredColumns = ['title', 'sector', 'status'];
         $missingColumns = array_diff($requiredColumns, $header);
         if (!empty($missingColumns)) {
             return back()->withErrors(['csv_file' => 'Missing required columns: ' . implode(', ', $missingColumns)]);
@@ -168,8 +168,8 @@ class ProjectController extends Controller
             $data = array_combine($header, $row);
 
             // Validate required fields
-            if (empty($data['title']) || empty($data['description']) || empty($data['status'])) {
-                $errors[] = "Row {$rowNumber}: Missing required data (title, description, or status).";
+            if (empty($data['title']) || empty($data['status'])) {
+                $errors[] = "Row {$rowNumber}: Missing required data (title or status).";
                 continue;
             }
 
@@ -241,6 +241,14 @@ class ProjectController extends Controller
         $message = "{$imported} project(s) imported successfully.";
         if (!empty($errors)) {
             $message .= ' ' . count($errors) . ' row(s) had errors.';
+
+            // Cap the errors at 10 to prevent large session cookie payloads that cause browser logout
+            if (count($errors) > 10) {
+                $hiddenErrorCount = count($errors) - 10;
+                $errors = array_slice($errors, 0, 10);
+                $errors[] = "... And {$hiddenErrorCount} more rows failed.";
+            }
+
             return redirect()->route('admin.projects.index')
                 ->with('success', $message)
                 ->withErrors($errors);
