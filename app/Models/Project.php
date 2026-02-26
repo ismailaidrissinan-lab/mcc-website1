@@ -65,6 +65,6 @@ class Project extends Model
             return $path;
         }
 
-        return url('system-assets').'/'.($path);
+        return \Illuminate\Support\Facades\Storage::url($path);
     }
 }
