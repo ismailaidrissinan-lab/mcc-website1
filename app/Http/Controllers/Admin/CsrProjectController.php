@@ -62,7 +62,7 @@ class CsrProjectController extends Controller
         
         if ($request->hasFile('image')) {
             if ($project->image_path) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($project->image_path);
+                \Illuminate\Support\Facades\Storage::delete($project->image_path);
             }
             $data['image_path'] = $request->file('image')->store('csr');
         }
@@ -76,7 +76,7 @@ class CsrProjectController extends Controller
     {
         $project = \App\Models\CsrProject::findOrFail($id);
         if ($project->image_path) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($project->image_path);
+            \Illuminate\Support\Facades\Storage::delete($project->image_path);
         }
         $project->delete();
         return redirect()->route('admin.csr.index')->with('success', 'CSR Project deleted successfully.');

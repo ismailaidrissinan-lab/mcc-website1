@@ -55,7 +55,7 @@ class TrainingController extends Controller
 
         if ($request->hasFile('image')) {
             if ($training->image_path) {
-                Storage::disk('public')->delete($training->image_path);
+                Storage::delete($training->image_path);
             }
             $validated['image_path'] = $request->file('image')->store('training');
         }
@@ -68,7 +68,7 @@ class TrainingController extends Controller
     public function destroy(TrainingProgram $training)
     {
         if ($training->image_path) {
-            Storage::disk('public')->delete($training->image_path);
+            Storage::delete($training->image_path);
         }
         $training->delete();
         return redirect()->route('admin.training.index')->with('success', 'Training program deleted successfully.');

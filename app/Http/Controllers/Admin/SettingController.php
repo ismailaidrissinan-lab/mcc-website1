@@ -23,8 +23,8 @@ class SettingController extends Controller
             if ($request->hasFile($key)) {
                 // Handle file uploads
                 $oldSetting = Setting::where('key', $key)->first();
-                if ($oldSetting && $oldSetting->value) {
-                    Storage::disk('public')->delete($oldSetting->value);
+                if ($oldSetting && $oldSetting->type === 'file' && $oldSetting->value) {
+                    Storage::delete($oldSetting->value);
                 }
                 $value = $request->file($key)->store('settings');
             }

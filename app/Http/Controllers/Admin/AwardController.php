@@ -57,7 +57,7 @@ class AwardController extends Controller
 
         if ($request->hasFile('image')) {
             if ($award->image_path) {
-                Storage::disk('public')->delete($award->image_path);
+                Storage::delete($award->image_path);
             }
             $validated['image_path'] = $request->file('image')->store('awards');
         }
@@ -70,7 +70,7 @@ class AwardController extends Controller
     public function destroy(Award $award)
     {
         if ($award->image_path) {
-            Storage::disk('public')->delete($award->image_path);
+            Storage::delete($award->image_path);
         }
         $award->delete();
         return redirect()->route('admin.awards.index')->with('success', 'Award deleted successfully.');

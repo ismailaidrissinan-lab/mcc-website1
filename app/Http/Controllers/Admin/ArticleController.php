@@ -64,7 +64,7 @@ class ArticleController extends Controller
 
         if ($request->hasFile('image')) {
             if ($article->image_path) {
-                Storage::disk('public')->delete($article->image_path);
+                Storage::delete($article->image_path);
             }
             $data['image_path'] = $request->file('image')->store('articles');
         }
@@ -77,7 +77,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         if ($article->image_path) {
-            Storage::disk('public')->delete($article->image_path);
+            Storage::delete($article->image_path);
         }
         $article->delete();
         return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
