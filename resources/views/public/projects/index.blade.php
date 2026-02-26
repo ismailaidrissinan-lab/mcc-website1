@@ -65,6 +65,7 @@
                             .then(data => {
                                 document.getElementById('project-list-container').innerHTML = data.list;
                                 document.getElementById('project-stats-container').innerHTML = data.stats;
+                                this.$dispatch('projects-updated', data.statesWithProjects);
                                 this.loading = false;
                             })
                             .catch(error => { console.error('Error:', error); this.loading = false; });

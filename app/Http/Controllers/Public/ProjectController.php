@@ -92,13 +92,14 @@ class ProjectController extends Controller
 
         $sectors = Sector::all();
         $states = \App\Models\State::all();
-        $statesWithProjects = \App\Models\State::whereHas('projects')->pluck('slug')->toArray();
+        $statesWithProjects = $projects->pluck('state.slug')->filter()->unique()->values()->toArray();
 
         if ($request->ajax()) {
             $selectedStatus = $request->status;
             return response()->json([
                 'list' => view('public.projects._list', compact('projects'))->render(),
                 'stats' => view('public.projects._stats', compact('stats', 'selectedStatus'))->render(),
+                'statesWithProjects' => $statesWithProjects
             ]);
         }
 

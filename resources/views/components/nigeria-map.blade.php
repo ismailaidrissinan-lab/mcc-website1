@@ -1,7 +1,7 @@
 @props(['statesWithProjects' => []])
 
 <div class="nigeria-map-wrapper relative w-full h-auto bg-white rounded-2xl p-4 shadow border border-slate-100"
-    x-data="nigeriaMap({{ json_encode($statesWithProjects) }})" x-init="init()" @reset-map.window="resetFilter()">
+    x-data="nigeriaMap({{ json_encode($statesWithProjects) }})" x-init="init()" @reset-map.window="resetFilter()" @projects-updated.window="updateMarkers($event.detail)">
 
     <div class="flex items-center justify-between mb-3">
         <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest">{{ __('Filter by State') }}</h3>
@@ -92,6 +92,26 @@
 
             init() {
                 this.loadMap();
+            },
+
+            updateMarkers(newStates) {
+                this.statesWithProjects = newStates;
+                const container = document.getElementById('nigeria-map-container');
+                if (!container) return;
+                const svg = container.querySelector('svg');
+                if (!svg) return;
+
+                // Remove existing markers
+                svg.querySelectorAll('.state-marker').forEach(marker => marker.remove());
+
+                // Re-add markers based on new states array
+                const paths = svg.querySelectorAll('.state-path');
+                paths.forEach(path => {
+                    const id = path.getAttribute('id');
+                    if (this.statesWithProjects.includes(id)) {
+                        this.addStateMarker(svg, path);
+                    }
+                });
             },
 
             loadMap() {
