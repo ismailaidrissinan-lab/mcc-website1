@@ -195,19 +195,45 @@ class ProjectController extends Controller
                 continue;
             }
 
-            Project::create([
-                'title' => trim($data['title']),
-                'slug' => Str::slug(trim($data['title'])),
-                'sector_id' => $sector->id,
-                'state_id' => $stateId,
-                'location' => trim($data['location'] ?? ''),
-                'description' => trim($data['description']),
-                'status' => $status,
-                'award_date' => !empty($data['award_date']) ? $data['award_date'] : null,
-                'completion_date' => !empty($data['completion_date']) ? $data['completion_date'] : null,
-            ]);
+            // Safely parse dates
+            $awardDate = null;
+            if (!empty(trim($data['award_date']))) {
+                try {
+                    $awardDate = \Carbon\Carbon::parse(trim($data['award_date']))->format('Y-m-d');
+                } catch (\Exception $e) {
+                    $errors[] = "Row {$rowNumber}: Invalid award_date format '{$data['award_date']}'. Use YYYY-MM-DD.";
+                    continue;
+                }
+            }
 
-            $imported++;
+            $completionDate = null;
+            if (!empty(trim($data['completion_date']))) {
+                try {
+                    $completionDate = \Carbon\Carbon::parse(trim($data['completion_date']))->format('Y-m-d');
+                } catch (\Exception $e) {
+                    $errors[] = "Row {$rowNumber}: Invalid completion_date format '{$data['completion_date']}'. Use YYYY-MM-DD.";
+                    continue;
+                }
+            }
+
+            try {
+                Project::create([
+                    'title' => trim($data['title']),
+                    'slug' => Str::slug(trim($data['title'])),
+                    'sector_id' => $sector->id,
+                    'state_id' => $stateId,
+                    'location' => trim($data['location'] ?? ''),
+                    'description' => trim($data['description']),
+                    'status' => $status,
+                    'award_date' => $awardDate,
+                    'completion_date' => $completionDate,
+                ]);
+
+                $imported++;
+            } catch (\Exception $e) {
+                // Catch any database level errors (e.g. data too long, constraint failure)
+                $errors[] = "Row {$rowNumber}: Database Error - " . $e->getMessage();
+            }
         }
 
         $message = "{$imported} project(s) imported successfully.";
