@@ -197,21 +197,23 @@ class ProjectController extends Controller
 
             // Safely parse dates
             $awardDate = null;
-            if (!empty(trim($data['award_date']))) {
+            $rawAwardDate = trim($data['award_date'] ?? '');
+            if (!empty($rawAwardDate)) {
                 try {
-                    $awardDate = \Carbon\Carbon::parse(trim($data['award_date']))->format('Y-m-d');
-                } catch (\Exception $e) {
-                    $errors[] = "Row {$rowNumber}: Invalid award_date format '{$data['award_date']}'. Use YYYY-MM-DD.";
+                    $awardDate = \Carbon\Carbon::parse($rawAwardDate)->format('Y-m-d');
+                } catch (\Throwable $e) {
+                    $errors[] = "Row {$rowNumber}: Invalid award_date format '{$rawAwardDate}'. Use YYYY-MM-DD.";
                     continue;
                 }
             }
 
             $completionDate = null;
-            if (!empty(trim($data['completion_date']))) {
+            $rawCompletionDate = trim($data['completion_date'] ?? '');
+            if (!empty($rawCompletionDate)) {
                 try {
-                    $completionDate = \Carbon\Carbon::parse(trim($data['completion_date']))->format('Y-m-d');
-                } catch (\Exception $e) {
-                    $errors[] = "Row {$rowNumber}: Invalid completion_date format '{$data['completion_date']}'. Use YYYY-MM-DD.";
+                    $completionDate = \Carbon\Carbon::parse($rawCompletionDate)->format('Y-m-d');
+                } catch (\Throwable $e) {
+                    $errors[] = "Row {$rowNumber}: Invalid completion_date format '{$rawCompletionDate}'. Use YYYY-MM-DD.";
                     continue;
                 }
             }
@@ -230,7 +232,7 @@ class ProjectController extends Controller
                 ]);
 
                 $imported++;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // Catch any database level errors (e.g. data too long, constraint failure)
                 $errors[] = "Row {$rowNumber}: Database Error - " . $e->getMessage();
             }
