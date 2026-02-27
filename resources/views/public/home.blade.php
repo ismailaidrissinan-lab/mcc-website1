@@ -4,9 +4,9 @@
     <!-- Hero Section -->
     <div class="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-mcc-slate-900">
         <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0 animate-slow-zoom-out origin-center">
+        <div class="absolute inset-0 z-0 animate-slow-zoom-out origin-center bg-mcc-slate-900">
             <img src="{{ asset('images/mcc-logo.png') }}"
-                alt="Engineering Excellence" class="w-full h-full object-cover">
+                alt="Engineering Excellence" class="w-full h-full object-contain opacity-60">
             <div class="absolute inset-0 bg-gradient-to-r from-mcc-blue-950/90 via-mcc-blue-950/70 to-transparent"></div>
         </div>
 
@@ -138,11 +138,11 @@
                 </div>
             </div>
 
-            <div class="mt-12 flex justify-center">
-                <a href="{{ route('projects.index') }}" class="group inline-flex items-center space-x-4 pl-6 pr-2 py-2 bg-white border border-mcc-slate-200 rounded-full shadow-sm hover:shadow-md hover:border-mcc-blue-200 transition-all duration-300">
-                    <span class="text-xs font-bold text-mcc-slate-600 group-hover:text-mcc-blue-700 uppercase tracking-widest">{{ __('View Projects Portfolio') }}</span>
-                    <div class="w-10 h-10 rounded-full bg-mcc-slate-50 group-hover:bg-mcc-blue-600 flex items-center justify-center transition-colors duration-300">
-                        <svg class="w-4 h-4 text-mcc-slate-400 group-hover:text-white transform group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mt-8 flex justify-end">
+                <a href="{{ route('projects.index') }}" class="group inline-flex items-center space-x-2 pl-4 pr-1.5 py-1.5 bg-mcc-slate-50 border border-mcc-slate-200 rounded-full shadow-sm hover:bg-white hover:shadow hover:border-mcc-blue-300 transition-all duration-300">
+                    <span class="text-[10px] font-bold text-mcc-slate-500 group-hover:text-mcc-blue-700 uppercase tracking-widest">{{ __('View Projects') }}</span>
+                    <div class="w-6 h-6 rounded-full bg-mcc-slate-200 group-hover:bg-mcc-blue-600 flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-3 h-3 text-mcc-slate-500 group-hover:text-white transform group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
