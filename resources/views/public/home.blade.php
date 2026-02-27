@@ -162,14 +162,13 @@
                         {{ __('Engineering Solutions for a Changing World') }}
                     </h3>
                 </div>
-                <a href="{{ route('projects.index') }}"
-                    class="group inline-flex items-center font-bold text-mcc-blue-700 hover:text-mcc-blue-900 transition-colors">
-                    {{ __('View Our Full Portfolio') }}
-                    <svg class="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
-                        </path>
-                    </svg>
+                <a href="{{ route('projects.index') }}" class="group inline-flex items-center space-x-2 pl-4 pr-1.5 py-1.5 bg-mcc-slate-50 border border-mcc-slate-200 rounded-full shadow-sm hover:bg-white hover:shadow hover:border-mcc-blue-300 transition-all duration-300">
+                    <span class="text-[10px] font-bold text-mcc-slate-500 group-hover:text-mcc-blue-700 uppercase tracking-widest">{{ __('View Full Portfolio') }}</span>
+                    <div class="w-6 h-6 rounded-full bg-mcc-slate-200 group-hover:bg-mcc-blue-600 flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-3 h-3 text-mcc-slate-500 group-hover:text-white transform group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
                 </a>
             </div>
 
@@ -214,14 +213,13 @@
                         {{ __('Corporate News & Insights') }}
                     </h3>
                 </div>
-                <a href="{{ route('articles.index') }}"
-                    class="group inline-flex items-center font-bold text-mcc-blue-700 hover:text-mcc-blue-900 transition-colors">
-                    {{ __('View All News') }}
-                    <svg class="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
-                        </path>
-                    </svg>
+                <a href="{{ route('articles.index') }}" class="group inline-flex items-center space-x-2 pl-4 pr-1.5 py-1.5 bg-mcc-slate-50 border border-mcc-slate-200 rounded-full shadow-sm hover:bg-white hover:shadow hover:border-mcc-blue-300 transition-all duration-300">
+                    <span class="text-[10px] font-bold text-mcc-slate-500 group-hover:text-mcc-blue-700 uppercase tracking-widest">{{ __('View All News') }}</span>
+                    <div class="w-6 h-6 rounded-full bg-mcc-slate-200 group-hover:bg-mcc-blue-600 flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-3 h-3 text-mcc-slate-500 group-hover:text-white transform group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
                 </a>
             </div>
 
