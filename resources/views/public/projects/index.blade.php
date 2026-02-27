@@ -313,7 +313,7 @@
                         </div>
 
                         <!-- Title -->
-                        <h2 class="text-3xl md:text-4xl font-black text-mcc-slate-900 leading-[1.15] mb-8 tracking-tight"
+                        <h2 class="text-3xl md:text-4xl font-black text-mcc-slate-900 leading-snug mb-8 tracking-tight break-words"
                             x-text="activeProject?.title"></h2>
 
                         <!-- Premium Metadata Grid -->
