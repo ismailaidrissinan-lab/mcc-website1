@@ -4,7 +4,7 @@
     <!-- Hero Section -->
     <div class="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-mcc-slate-900">
         <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0 scale-150 animate-slow-zoom">
+        <div class="absolute inset-0 z-0 scale-105 animate-slow-zoom">
             <img src="{{ asset('images/mcc-logo.png') }}"
                 alt="Engineering Excellence" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-mcc-blue-950/90 via-mcc-blue-950/70 to-transparent"></div>
@@ -114,45 +114,28 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="py-32 bg-mcc-slate-900 relative overflow-hidden" reveal>
-        <!-- Background Decorative Elements -->
-        <div class="absolute inset-0 z-0 blur-[120px] opacity-40 pointer-events-none">
-            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-mcc-gold rounded-full mix-blend-screen"></div>
-            <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-mcc-blue-600 rounded-full mix-blend-screen"></div>
-        </div>
-
-        <div class="container-wide relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-mcc-gold font-bold text-xs uppercase tracking-[0.2em] mb-4">{{ __('Our Impact') }}</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white tracking-tight">{{ __('Delivering Excellence by the Numbers') }}</h3>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 text-center">
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] hover:-translate-y-3 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] group">
-                    <div class="text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-mcc-gold to-yellow-100 mb-6 group-hover:scale-110 transition-transform duration-500" data-count="150">150+</div>
-                    <div class="text-sm font-bold text-mcc-blue-200 uppercase tracking-[0.2em]">{{ __('Completed Projects') }}</div>
+    <section class="py-24 bg-white" reveal>
+        <div class="container-wide">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+                <div class="space-y-3">
+                    <div class="text-5xl font-bold text-mcc-blue-900" data-count="150">150+</div>
+                    <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Completed Projects') }}
+                    </div>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] hover:-translate-y-3 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] group">
-                    <div class="text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-mcc-gold to-yellow-100 mb-6 group-hover:scale-110 transition-transform duration-500" data-count="20">20+</div>
-                    <div class="text-sm font-bold text-mcc-blue-200 uppercase tracking-[0.2em]">{{ __('Years Experience') }}</div>
+                <div class="space-y-3">
+                    <div class="text-5xl font-bold text-mcc-blue-900" data-count="20">20+</div>
+                    <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Years Experience') }}
+                    </div>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] hover:-translate-y-3 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] group">
-                    <div class="text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-mcc-gold to-yellow-100 mb-6 group-hover:scale-110 transition-transform duration-500" data-count="12">12+</div>
-                    <div class="text-sm font-bold text-mcc-blue-200 uppercase tracking-[0.2em]">{{ __('Global Markets') }}</div>
+                <div class="space-y-3">
+                    <div class="text-5xl font-bold text-mcc-blue-900" data-count="12">12+</div>
+                    <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Global Markets') }}</div>
                 </div>
-                <div class="bg-white/5 backdrop-blur-md border border-white/10 p-10 rounded-[2.5rem] hover:-translate-y-3 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,255,255,0.1)] group">
-                    <div class="text-5xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-mcc-gold to-yellow-100 mb-6 group-hover:scale-110 transition-transform duration-500" data-count="5000">5,000+</div>
-                    <div class="text-sm font-bold text-mcc-blue-200 uppercase tracking-[0.2em]">{{ __('Dedicated Staff') }}</div>
+                <div class="space-y-3">
+                    <div class="text-5xl font-bold text-mcc-blue-900" data-count="5000">5,000+</div>
+                    <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Dedicated Staff') }}
+                    </div>
                 </div>
-            </div>
-
-            <div class="mt-20 flex justify-center">
-                <a href="{{ route('projects.index') }}" class="btn-corporate bg-mcc-gold text-mcc-slate-900 border-transparent hover:bg-white hover:border-transparent hover:text-mcc-slate-900 shadow-xl transition-all group">
-                    <span class="font-bold">{{ __('View All Projects') }}</span>
-                    <svg class="ml-2 -mr-1 h-5 w-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
             </div>
         </div>
     </section>
