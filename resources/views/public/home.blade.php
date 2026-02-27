@@ -4,7 +4,7 @@
     <!-- Hero Section -->
     <div class="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-mcc-slate-900">
         <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0 scale-105 animate-slow-zoom">
+        <div class="absolute inset-0 z-0 animate-slow-zoom-out origin-center">
             <img src="{{ asset('images/mcc-logo.png') }}"
                 alt="Engineering Excellence" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-mcc-blue-950/90 via-mcc-blue-950/70 to-transparent"></div>
@@ -114,9 +114,9 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="py-24 bg-white" reveal>
+    <section class="py-24 bg-white relative" reveal>
         <div class="container-wide">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center pb-8 border-b border-mcc-slate-100">
                 <div class="space-y-3">
                     <div class="text-5xl font-bold text-mcc-blue-900" data-count="150">150+</div>
                     <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Completed Projects') }}
@@ -136,6 +136,17 @@
                     <div class="text-xs font-bold text-mcc-gold uppercase tracking-[0.2em]">{{ __('Dedicated Staff') }}
                     </div>
                 </div>
+            </div>
+
+            <div class="mt-12 flex justify-center">
+                <a href="{{ route('projects.index') }}" class="group inline-flex items-center space-x-4 pl-6 pr-2 py-2 bg-white border border-mcc-slate-200 rounded-full shadow-sm hover:shadow-md hover:border-mcc-blue-200 transition-all duration-300">
+                    <span class="text-xs font-bold text-mcc-slate-600 group-hover:text-mcc-blue-700 uppercase tracking-widest">{{ __('View Projects Portfolio') }}</span>
+                    <div class="w-10 h-10 rounded-full bg-mcc-slate-50 group-hover:bg-mcc-blue-600 flex items-center justify-center transition-colors duration-300">
+                        <svg class="w-4 h-4 text-mcc-slate-400 group-hover:text-white transform group-hover:translate-x-0.5 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
             </div>
         </div>
     </section>

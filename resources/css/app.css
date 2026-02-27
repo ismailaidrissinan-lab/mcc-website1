@@ -38,6 +38,14 @@
     --color-mcc-gold: #c5a059;
     --color-mcc-gold-dark: #a68546;
     --color-mcc-gold-light: #d9c49a;
+
+    /* Custom Animations */
+    --animate-slow-zoom-out: slow-zoom-out 20s ease-in-out infinite alternate;
+}
+
+@keyframes slow-zoom-out {
+    0% { transform: scale(1.15); }
+    100% { transform: scale(1); }
 }
 
 @layer base {
