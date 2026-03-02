@@ -14,7 +14,7 @@
         <aside class="bg-mcc-slate-900 text-white w-64 flex-shrink-0 transition-all duration-300"
             :class="sidebarOpen ? 'ml-0' : '-ml-64'">
             <div class="h-20 flex items-center justify-center border-b border-mcc-slate-800 px-6">
-                <a href="{{ route('home') }}" target="_blank">
+                <a href="{{ route('home') }}">
                     <img src="{{ asset('images/mcc-logo.png') }}" alt="MCC Ltd" class="h-10 w-auto brightness-0 invert">
                 </a>
             </div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <div class="pt-8 border-t border-mcc-slate-800 mt-8">
-                    <a href="{{ route('home') }}" target="_blank"
+                    <a href="{{ route('home') }}"
                         class="flex items-center px-4 py-3 text-mcc-slate-400 hover:text-white transition">
                         <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
