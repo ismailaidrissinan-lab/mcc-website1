@@ -227,13 +227,6 @@
                         </div>
                     </div>
 
-                    {{-- Hidden delete forms --}}
-                    @foreach($project->images as $image)
-                        <form id="delete-image-{{ $image->id }}" action="{{ route('admin.projects.images.destroy', $image) }}"
-                            method="POST" class="hidden">
-                            @csrf @method('DELETE')
-                        </form>
-                    @endforeach
                 @endif
 
                 {{-- Upload New Gallery Images --}}
@@ -290,5 +283,15 @@
                 </button>
             </div>
         </form>
+
+        {{-- Hidden delete forms (Outside main form to avoid nesting) --}}
+        @if(isset($project) && $project->images->count())
+            @foreach($project->images as $image)
+                <form id="delete-image-{{ $image->id }}" action="{{ route('admin.projects.images.destroy', $image) }}"
+                    method="POST" class="hidden">
+                    @csrf @method('DELETE')
+                </form>
+            @endforeach
+        @endif
     </div>
 @endsection
