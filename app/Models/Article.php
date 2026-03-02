@@ -33,4 +33,8 @@ class Article extends Model
 
         return \Illuminate\Support\Facades\Storage::url($this->image_path);
     }
+    public function images()
+    {
+        return $this->hasMany(ArticleImage::class);
+    }
 }

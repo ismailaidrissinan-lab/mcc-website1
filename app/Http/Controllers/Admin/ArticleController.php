@@ -27,7 +27,8 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'summary' => 'required|string',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:1024',
+            'image' => 'nullable|image|max:2048',
+            'gallery_images.*' => 'nullable|image|max:2048',
             'published_at' => 'nullable|date',
         ]);
 
@@ -36,16 +37,24 @@ class ArticleController extends Controller
         $data['published_at'] = $request->published_at ?? now();
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('articles');
+            $data['image_path'] = $request->file('image')->store('articles', 'public');
         }
 
-        Article::create($data);
+        $article = Article::create($data);
+
+        if ($request->hasFile('gallery_images')) {
+            foreach ($request->file('gallery_images') as $image) {
+                $path = $image->store('articles/gallery', 'public');
+                $article->images()->create(['image_path' => $path]);
+            }
+        }
 
         return redirect()->route('admin.articles.index')->with('success', 'Article created successfully.');
     }
 
     public function edit(Article $article)
     {
+        $article->load('images');
         return view('admin.articles.form', compact('article'));
     }
 
@@ -55,7 +64,8 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'summary' => 'required|string',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:1024',
+            'image' => 'nullable|image|max:2048',
+            'gallery_images.*' => 'nullable|image|max:2048',
             'published_at' => 'nullable|date',
         ]);
 
@@ -64,12 +74,19 @@ class ArticleController extends Controller
 
         if ($request->hasFile('image')) {
             if ($article->image_path) {
-                Storage::delete($article->image_path);
+                Storage::disk('public')->delete($article->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('articles');
+            $data['image_path'] = $request->file('image')->store('articles', 'public');
         }
 
         $article->update($data);
+
+        if ($request->hasFile('gallery_images')) {
+            foreach ($request->file('gallery_images') as $image) {
+                $path = $image->store('articles/gallery', 'public');
+                $article->images()->create(['image_path' => $path]);
+            }
+        }
 
         return redirect()->route('admin.articles.index')->with('success', 'Article updated successfully.');
     }
@@ -77,9 +94,22 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         if ($article->image_path) {
-            Storage::delete($article->image_path);
+            Storage::disk('public')->delete($article->image_path);
         }
+
+        foreach ($article->images as $image) {
+            Storage::disk('public')->delete($image->image_path);
+            $image->delete();
+        }
+
         $article->delete();
         return redirect()->route('admin.articles.index')->with('success', 'Article deleted successfully.');
+    }
+
+    public function destroyImage(ArticleImage $image)
+    {
+        Storage::disk('public')->delete($image->image_path);
+        $image->delete();
+        return back()->with('success', 'Image removed from gallery.');
     }
 }

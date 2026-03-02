@@ -59,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('sectors', AdminSectorController::class);
     Route::resource('awards', \App\Http\Controllers\Admin\AwardController::class);
     Route::resource('training', \App\Http\Controllers\Admin\TrainingController::class);
+    Route::delete('articles/images/{image}', [\App\Http\Controllers\Admin\ArticleController::class, 'destroyImage'])->name('articles.images.destroy');
     Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class);
     Route::resource('csr', \App\Http\Controllers\Admin\CsrProjectController::class);
     Route::resource('investors', \App\Http\Controllers\Admin\InvestorDocumentController::class);
